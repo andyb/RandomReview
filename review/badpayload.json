@@ -1,0 +1,132 @@
+{
+  "ref": "refs\/heads\/Integration",
+  "after": "ecea7cbada120b828a8f72ead7fbd255a6a58d1e",
+  "before": "75ee12a20fb0c888bed640ae5c3544b9ea78a887",
+  "created": false,
+  "deleted": false,
+  "forced": false,
+  "compare_bad": "https:\/\/github.com\/sportingsolutions\/SS.GTP\/compare\/75ee12a20fb0...ecea7cbada12",
+  "commits": [
+    {
+      "id": "ecea7cbada120b828a8f72ead7fbd255a6a58d1e",
+      "distinct": true,
+      "message": "FB6551 PMA: Build generic suspend on first pricing functionality (enabled for Snooker & Darts)",
+      "timestamp": "2013-10-29T02:29:07-07:00",
+      "url": "https:\/\/github.com\/sportingsolutions\/SS.GTP\/commit\/ecea7cbada120b828a8f72ead7fbd255a6a58d1e",
+      "author": {
+        "name": "Tom Scott",
+        "email": "tom_scott@me.com",
+        "username": "tom-scott"
+      },
+      "committer": {
+        "name": "Tom Scott",
+        "email": "tom_scott@me.com",
+        "username": "tom-scott"
+      },
+      "added": [
+        
+      ],
+      "removed": [
+        
+      ],
+      "modified": [
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain.UnitTests\/Converters\/DartsConverterTests.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain.UnitTests\/Converters\/SnookerConverterTests.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/AmericanFootballConverter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/AustralianRulesConverter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/BaseFootballConverter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/BaseballConverter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/BasketballConverter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/DartsConverter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/GaelicFootballConverter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/GaelicHurlingConverter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/HandballConverter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/IConverter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/IceHockeyConverter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/RugbyLeagueConverter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/RugbyUnionConverter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/SnookerConverter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/TennisConverter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/VolleyballConverter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Service\/Converter\/Converter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Service\/Converter\/IConverter.cs",
+        "Solutions\/SS.GTP.PreMatchAutomation.Service\/Pricing\/PreMatchAutomationPricing.cs"
+      ]
+    }
+  ],
+  "head_commit": {
+    "id": "ecea7cbada120b828a8f72ead7fbd255a6a58d1e",
+    "distinct": true,
+    "message": "FB6551 PMA: Build generic suspend on first pricing functionality (enabled for Snooker & Darts)",
+    "timestamp": "2013-10-29T02:29:07-07:00",
+    "url": "https:\/\/github.com\/sportingsolutions\/SS.GTP\/commit\/ecea7cbada120b828a8f72ead7fbd255a6a58d1e",
+    "author": {
+      "name": "Tom Scott",
+      "email": "tom_scott@me.com",
+      "username": "tom-scott"
+    },
+    "committer": {
+      "name": "Tom Scott",
+      "email": "tom_scott@me.com",
+      "username": "tom-scott"
+    },
+    "added": [
+      
+    ],
+    "removed": [
+      
+    ],
+    "modified": [
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain.UnitTests\/Converters\/DartsConverterTests.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain.UnitTests\/Converters\/SnookerConverterTests.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/AmericanFootballConverter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/AustralianRulesConverter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/BaseFootballConverter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/BaseballConverter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/BasketballConverter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/DartsConverter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/GaelicFootballConverter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/GaelicHurlingConverter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/HandballConverter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/IConverter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/IceHockeyConverter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/RugbyLeagueConverter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/RugbyUnionConverter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/SnookerConverter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/TennisConverter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Domain\/Converters\/VolleyballConverter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Service\/Converter\/Converter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Service\/Converter\/IConverter.cs",
+      "Solutions\/SS.GTP.PreMatchAutomation.Service\/Pricing\/PreMatchAutomationPricing.cs"
+    ]
+  },
+  "repository": {
+    "id": 5354686,
+    "name": "SS.GTP",
+    "url": "https:\/\/github.com\/sportingsolutions\/SS.GTP",
+    "description": "The GTP Core Solution including domain model and services",
+    "watchers": 3,
+    "stargazers": 3,
+    "forks": 18,
+    "fork": false,
+    "size": 585214,
+    "owner": {
+      "name": "sportingsolutions",
+      "email": null
+    },
+    "private": true,
+    "open_issues": 0,
+    "has_issues": true,
+    "has_downloads": true,
+    "has_wiki": true,
+    "language": "C#",
+    "created_at": 1344511423,
+    "pushed_at": 1383038973,
+    "master_branch": "Integration",
+    "organization": "sportingsolutions"
+  },
+  "pusher_bad": {
+    "name": "tom-scott",
+    "email": "tom_scott@me.com"
+  }
+}
