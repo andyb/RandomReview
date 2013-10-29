@@ -14,21 +14,21 @@ import (
 	"time"
 )
 
-type review_request struct {
-	from        string
-	from_email  string
-	to          reviewer
-	message     string
-	review_link string
+type Review_request struct {
+	From        string
+	From_email  string
+	To          Reviewer
+	Message     string
+	Review_link string
 }
 
-type reviewer struct {
-	name  string
-	email string
+type Reviewer struct {
+	Name  string
+	Email string
 }
 
 //Takes a json payload request from GitHub and attempts to generate a Review request from it.
-func GenerateReviewRequest(payload interface{}, reviewers []reviewer) (rr review_request, err error) {
+func GenerateReviewRequest(payload interface{}, reviewers []Reviewer) (rr Review_request, err error) {
 	log.Println("GenerateReviewRequest")
 
 	defer func() {
@@ -41,25 +41,25 @@ func GenerateReviewRequest(payload interface{}, reviewers []reviewer) (rr review
 	return
 }
 
-func SendReviewRequestEmail(request review_request) {
-	toAddresses := []string{request.to.email}
+func SendReviewRequestEmail(request Review_request) {
+	toAddresses := []string{request.To.Email}
 	var output bytes.Buffer
-	subject := "A random code review request from " + request.from
-	output.WriteString(fmt.Sprintf("Hi %v: \n\n", request.to.name))
-	output.WriteString(fmt.Sprintf("Congratulations, it's you're luck day. You've been randomly chosen to do a code review for %v \n\n", request.from))
-	output.WriteString(fmt.Sprintf("You can review the commits here: %v \n\n", request.review_link))
+	subject := "A random code review request from " + request.From
+	output.WriteString(fmt.Sprintf("Hi %v: \n\n", request.To.Name))
+	output.WriteString(fmt.Sprintf("Congratulations, it's you're lucky day. You've been randomly chosen to do a code review for %v \n\n", request.From))
+	output.WriteString(fmt.Sprintf("You can review the commits here: %v \n\n", request.Review_link))
 	output.WriteString("Happy reviewing!!!\n\n")
-	sendMail(output.Bytes(), subject, request.from_email, toAddresses)
+	sendMail(output.Bytes(), subject, request.From_email, toAddresses)
 }
 
-func parsePropertiesAndRandomGenReviewer(payload interface{}, reviewers []reviewer) review_request {
+func parsePropertiesAndRandomGenReviewer(payload interface{}, reviewers []Reviewer) Review_request {
 	pusher := payload.(map[string]interface{})["pusher"]
 	review_link := payload.(map[string]interface{})["compare"].(string)
 	rev := generateReviewer(reviewers)
-	return review_request{from: pusher.(map[string]interface{})["name"].(string), to: rev, message: "Please review", review_link: review_link}
+	return Review_request{From: pusher.(map[string]interface{})["name"].(string), To: rev, Message: "Please review", Review_link: review_link}
 }
 
-func generateReviewer(reviewers []reviewer) (rev reviewer) {
+func generateReviewer(reviewers []Reviewer) (rev Reviewer) {
 	count := len(reviewers)
 	if count == 0 {
 		log.Println("No reviewers provided. Exiting...")

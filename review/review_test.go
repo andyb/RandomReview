@@ -56,7 +56,7 @@ func loadJSONPayload(fileName string) (payload interface{}) {
 	return
 }
 
-func loadTestReviewers() (reviewers []reviewer) {
+func loadTestReviewers() (reviewers []Reviewer) {
 	expected_reviewer := reviewer{name: expected_reviewer_name, email: expected_reviewer_email}
 	reviewers = make([]reviewer, 3)
 	reviewers[0] = expected_reviewer
