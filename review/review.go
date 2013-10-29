@@ -16,13 +16,19 @@ import (
 
 type review_request struct {
 	from        string
-	to          string
+	from_email  string
+	to          reviewer
 	message     string
 	review_link string
 }
 
+type reviewer struct {
+	name  string
+	email string
+}
+
 //Takes a json payload request from GitHub and attempts to generate a Review request from it.
-func GenerateReviewRequest(payload interface{}, reviewers []string) (rr review_request, err error) {
+func GenerateReviewRequest(payload interface{}, reviewers []reviewer) (rr review_request, err error) {
 	log.Println("GenerateReviewRequest")
 
 	defer func() {
@@ -36,23 +42,24 @@ func GenerateReviewRequest(payload interface{}, reviewers []string) (rr review_r
 }
 
 func SendReviewRequestEmail(request review_request) {
-	toAddresses := []string{"abritcliffe@sportingsolutions.com"}
+	toAddresses := []string{request.to.email}
 	var output bytes.Buffer
-	subject := "A code review request"
-	output.WriteString(fmt.Sprintf("Hi %v: \n\n", request.to))
-	output.WriteString("Congratulations, it's you're luck day.\n\n")
+	subject := "A random code review request from " + request.from
+	output.WriteString(fmt.Sprintf("Hi %v: \n\n", request.to.name))
+	output.WriteString(fmt.Sprintf("Congratulations, it's you're luck day. You've been randomly chosen to do a code review for %v \n\n", request.from))
 	output.WriteString(fmt.Sprintf("You can review the commits here: %v \n\n", request.review_link))
 	output.WriteString("Happy reviewing!!!\n\n")
-	sendMail(output.Bytes(), subject, "abritcliffe@sportingindex.com", toAddresses)
+	sendMail(output.Bytes(), subject, request.from_email, toAddresses)
 }
 
-func parsePropertiesAndRandomGenReviewer(payload interface{}, reviewers []string) review_request {
+func parsePropertiesAndRandomGenReviewer(payload interface{}, reviewers []reviewer) review_request {
 	pusher := payload.(map[string]interface{})["pusher"]
 	review_link := payload.(map[string]interface{})["compare"].(string)
-	return review_request{from: pusher.(map[string]interface{})["name"].(string), to: generateReviewer(reviewers), message: "Please review", review_link: review_link}
+	rev := generateReviewer(reviewers)
+	return review_request{from: pusher.(map[string]interface{})["name"].(string), to: rev, message: "Please review", review_link: review_link}
 }
 
-func generateReviewer(reviewers []string) string {
+func generateReviewer(reviewers []reviewer) (rev reviewer) {
 	count := len(reviewers)
 	if count == 0 {
 		log.Println("No reviewers provided. Exiting...")
@@ -68,7 +75,7 @@ func generateReviewer(reviewers []string) string {
 
 func sendMail(output []byte, subject string, fromAddress string, toAddresses []string) {
 	smtpServer := "smtp.mailgun.org"
-	from := mail.Address{"Random Review Request", "pmaalert-noreply@sportingsolutions.com"}
+	from := mail.Address{"Random Review Request", "codereviewreq-noreply@sportingsolutions.com"}
 	auth := smtp.PlainAuth(
 		"",
 		"postmaster@sportingsolutions.com",

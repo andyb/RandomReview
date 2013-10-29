@@ -9,9 +9,10 @@ import (
 )
 
 const (
-	expected_review_link = "https://github.com/sportingsolutions/SS.GTP/compare/75ee12a20fb0...ecea7cbada12"
-	expected_reviewer    = "Reviewer One"
-	expected_from        = "tom-scott"
+	expected_review_link    = "https://github.com/sportingsolutions/SS.GTP/compare/75ee12a20fb0...ecea7cbada12"
+	expected_from           = "tom-scott"
+	expected_reviewer_name  = "Reviewer One"
+	expected_reviewer_email = "abritcliffe@sportingindex.com"
 )
 
 func Test_Parsing_GitHub_WebHook(t *testing.T) {
@@ -21,8 +22,12 @@ func Test_Parsing_GitHub_WebHook(t *testing.T) {
 		t.Errorf("Incorrect from property: %v expecting %v", req.from, expected_from)
 	}
 
-	if req.to != expected_reviewer {
-		t.Errorf("Incorrect to property: %v expecting %v", req.to, expected_reviewer)
+	if req.to.name != expected_reviewer_name {
+		t.Errorf("Incorrect to property: %v expecting %v", req.to, expected_reviewer_name)
+	}
+
+	if req.to.email != expected_reviewer_email {
+		t.Errorf("Incorrect to property: %v expecting %v", req.to, expected_reviewer_email)
 	}
 
 	if req.review_link != expected_review_link {
@@ -51,8 +56,9 @@ func loadJSONPayload(fileName string) (payload interface{}) {
 	return
 }
 
-func loadTestReviewers() (reviewers []string) {
-	reviewers = make([]string, 3)
+func loadTestReviewers() (reviewers []reviewer) {
+	expected_reviewer := reviewer{name: expected_reviewer_name, email: expected_reviewer_email}
+	reviewers = make([]reviewer, 3)
 	reviewers[0] = expected_reviewer
 	reviewers[1] = expected_reviewer
 	reviewers[2] = expected_reviewer
