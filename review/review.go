@@ -46,7 +46,7 @@ func SendReviewRequestEmail(request Review_request) {
 	var output bytes.Buffer
 	subject := "A random code review request from " + request.From
 	output.WriteString(fmt.Sprintf("Hi %v: \n\n", request.To.Name))
-	output.WriteString(fmt.Sprintf("Congratulations, it's you're lucky day. You've been randomly chosen to do a code review for %v \n\n", request.From))
+	output.WriteString(fmt.Sprintf("Congratulations, it's your lucky day. You've been randomly chosen to do a code review for %v \n\n", request.From))
 	output.WriteString(fmt.Sprintf("You can review the commits here: %v \n\n", request.Review_link))
 	output.WriteString("Happy reviewing!!!\n\n")
 	sendMail(output.Bytes(), subject, request.From_email, toAddresses)

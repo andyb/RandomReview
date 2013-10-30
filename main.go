@@ -3,10 +3,12 @@ package main
 import (
 	"./review"
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/mux"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 )
 
 const (
@@ -21,8 +23,13 @@ func startWeb() {
 	log.Printf("Starting web server @ %v...", ip)
 	router := mux.NewRouter()
 	router.HandleFunc("/", PostGitHubHookHandler).Methods("POST")
+	router.HandleFunc("/h", HealthCheckHandler)
 	http.Handle("/", router)
 	http.ListenAndServe(ip, router)
+}
+
+func HealthCheckHandler(rw http.ResponseWriter, req *http.Request) {
+	fmt.Fprintf(rw, "I'm good, thanks for asking")
 }
 
 func PostGitHubHookHandler(rw http.ResponseWriter, req *http.Request) {
@@ -37,8 +44,12 @@ func PostGitHubHookHandler(rw http.ResponseWriter, req *http.Request) {
 		reviewers := make([]review.Reviewer, 1)
 		reviewers[0] = review.Reviewer{Name: "Andy Britcliffe", Email: "abritcliffe@sportingsolutions.com"}
 
+		values, err := url.ParseQuery(string(body))
+
 		var jsonBody interface{}
-		json.Unmarshal(body, &jsonBody)
+		json.Unmarshal([]byte(values["payload"][0]), &jsonBody)
+		log.Printf("%s", jsonBody)
+
 		revreq, err := review.GenerateReviewRequest(jsonBody, reviewers)
 		review.SendReviewRequestEmail(revreq)
 

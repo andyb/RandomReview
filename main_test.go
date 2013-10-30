@@ -25,8 +25,9 @@ func TestGitHubHookHandlerNonPost(t *testing.T) {
 }
 
 func TestPostGitHubHookHandlerPost(t *testing.T) {
-	bodyBytes := loadJSONPayload("review/payload.json")
+	bodyBytes := loadRAWPayload("review/payload.raw")
 	req, err := http.NewRequest("POST", "http://api.sportingsolutions.com/", bytes.NewReader(bodyBytes))
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -39,7 +40,7 @@ func TestPostGitHubHookHandlerPost(t *testing.T) {
 	}
 }
 
-func loadJSONPayload(fileName string) (file []byte) {
+func loadRAWPayload(fileName string) (file []byte) {
 	file, e := ioutil.ReadFile(fileName)
 	if e != nil {
 		log.Printf("File error: %v\n", e)
