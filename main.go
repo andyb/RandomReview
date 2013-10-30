@@ -42,7 +42,7 @@ func PostGitHubHookHandler(rw http.ResponseWriter, req *http.Request) {
 
 		//need to tidy this up
 		reviewers := make([]review.Reviewer, 1)
-		reviewers[0] = review.Reviewer{Name: "Andy Britcliffe", Email: "abritcliffe@sportingsolutions.com"}
+		reviewers[0] = review.Reviewer{Name: "Tom Scott", Email: "tscott@sportingindex.com"}
 
 		values, err := url.ParseQuery(string(body))
 
