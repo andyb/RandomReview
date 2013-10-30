@@ -42,9 +42,10 @@ func GenerateReviewRequest(payload interface{}, reviewers []Reviewer) (rr Review
 }
 
 func SendReviewRequestEmail(request Review_request) {
+	log.Printf("Sending review request from %v to %v", request.From, request.To.Name)
 	toAddresses := []string{request.To.Email}
 	var output bytes.Buffer
-	subject := "A random code review request from " + request.From
+	subject := "Connect: Code review request from " + request.From
 	output.WriteString(fmt.Sprintf("Hi %v: \n\n", request.To.Name))
 	output.WriteString(fmt.Sprintf("Congratulations, it's your lucky day. You've been randomly chosen to do a code review for %v \n\n", request.From))
 	output.WriteString(fmt.Sprintf("You can review the commits here: %v \n\n", request.Review_link))
@@ -68,14 +69,14 @@ func generateReviewer(reviewers []Reviewer) (rev Reviewer) {
 
 	rand.Seed(time.Now().UTC().UnixNano())
 	r := rand.Intn(count)
-	log.Printf("%v index randomly selected", r)
+	log.Printf("%v index randomly selected. Reviewer is %v", r, reviewers[r].Name)
 
 	return reviewers[r]
 }
 
 func sendMail(output []byte, subject string, fromAddress string, toAddresses []string) {
 	smtpServer := "smtp.mailgun.org"
-	from := mail.Address{"Random Review Request", "codereviewreq-noreply@sportingsolutions.com"}
+	from := mail.Address{"Code Review Request", "codereviewreq-noreply@sportingsolutions.com"}
 	auth := smtp.PlainAuth(
 		"",
 		"postmaster@sportingsolutions.com",

@@ -48,7 +48,6 @@ func PostGitHubHookHandler(rw http.ResponseWriter, req *http.Request) {
 
 		var jsonBody interface{}
 		json.Unmarshal([]byte(values["payload"][0]), &jsonBody)
-		log.Printf("%s", jsonBody)
 
 		revreq, err := review.GenerateReviewRequest(jsonBody, reviewers)
 		review.SendReviewRequestEmail(revreq)
@@ -56,8 +55,6 @@ func PostGitHubHookHandler(rw http.ResponseWriter, req *http.Request) {
 		if err != nil {
 			logErrorAndReturnHttpError(err, rw, 400)
 		}
-
-		log.Printf("%s", revreq)
 
 	} else {
 		log.Println("Received request that wasn't a POST so ignored")
