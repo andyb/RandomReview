@@ -23,8 +23,9 @@ type Review_request struct {
 }
 
 type Reviewer struct {
-	Name  string
-	Email string
+	Name           string
+	Email          string
+	Githubusername string
 }
 
 //Takes a json payload request from GitHub and attempts to generate a Review request from it.
