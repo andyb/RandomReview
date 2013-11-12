@@ -4,6 +4,7 @@ import (
 	"randomreview/review"
 	"encoding/json"
 	"fmt"
+	"path/filepath"
 	"github.com/gorilla/mux"
 	"io/ioutil"
 	"log"
@@ -64,7 +65,8 @@ func PostGitHubHookHandler(rw http.ResponseWriter, req *http.Request) {
 }
 
 func loadReviewers() []review.Reviewer {
-	file, err := ioutil.ReadFile("reviewers.json")
+	path, err := ExecutableFolder() 
+	file, err := ioutil.ReadFile(path+ "reviewers.json")
 	if err != nil {
 		log.Printf("File error: %v\n", err)
 		os.Exit(1)
@@ -79,6 +81,17 @@ func loadReviewers() []review.Reviewer {
 	}
 	
 	return reviewers
+}
+
+// Returns same path as Executable, returns just the folder
+// path. Excludes the executable name.
+func ExecutableFolder() (string, error) {
+	p, err := os.Readlink("/proc/self/exe")
+	if err != nil {
+		return "", err
+	}
+	folder, _ := filepath.Split(p)
+	return folder, nil
 }
 
 func logErrorAndReturnHttpError(err error, w http.ResponseWriter, statusCode int) {
