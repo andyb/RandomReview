@@ -1,7 +1,7 @@
 package main
 
 import (
-	"./review"
+	"randomreview/review"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 )
 
 const (
@@ -39,11 +40,10 @@ func PostGitHubHookHandler(rw http.ResponseWriter, req *http.Request) {
 		if err != nil {
 			logErrorAndReturnHttpError(err, rw, 400)
 		}
+		
+		reviewers := loadReviewers()
 
-		//need to tidy this up
-		reviewers := make([]review.Reviewer, 1)
-		reviewers[0] = review.Reviewer{Name: "Tom Scott", Email: "tscott@sportingindex.com", Githubusername: "tom-scott"}
-
+			
 		values, err := url.ParseQuery(string(body))
 
 		var jsonBody interface{}
@@ -61,6 +61,24 @@ func PostGitHubHookHandler(rw http.ResponseWriter, req *http.Request) {
 		http.Error(rw, "File not found", 404)
 	}
 
+}
+
+func loadReviewers() []review.Reviewer {
+	file, err := ioutil.ReadFile("reviewers.json")
+	if err != nil {
+		log.Printf("File error: %v\n", err)
+		os.Exit(1)
+	}
+	
+	var reviewers []review.Reviewer
+	err = json.Unmarshal(file, &reviewers)
+	
+	if err != nil {
+		log.Printf("Error parsing reviewers file: %v\n", err)
+		os.Exit(1)
+	}
+	
+	return reviewers
 }
 
 func logErrorAndReturnHttpError(err error, w http.ResponseWriter, statusCode int) {

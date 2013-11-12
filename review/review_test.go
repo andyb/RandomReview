@@ -50,6 +50,20 @@ func Test_Failed_Parsing_GitHub_WebHook(t *testing.T) {
 	}
 }
 
+func Test_selected_self_review(t *testing.T) {
+	payload := loadJSONPayload("payload.json")
+	req, _ := GenerateReviewRequest(payload, loadTestReviewersSelfTest())
+	log.Println(req.From)
+	
+	if req.From != expected_from {
+		t.Errorf("Incorrect from property: %v expecting %v", req.From, expected_from)
+	}
+	
+	if req.To.Githubusername != expected_from {
+		t.Errorf("Incorrect property: %v expecting %v", req.To.Githubusername, expected_reviewer_github)
+	}
+}
+
 func loadJSONPayload(fileName string) (payload interface{}) {
 	file, e := ioutil.ReadFile(fileName)
 	if e != nil {
@@ -67,5 +81,12 @@ func loadTestReviewers() (reviewers []Reviewer) {
 	reviewers[0] = expected_reviewer
 	reviewers[1] = expected_reviewer
 	reviewers[2] = expected_reviewer
+	return
+}
+
+func loadTestReviewersSelfTest() (reviewers []Reviewer) {
+	reviewers = make([]Reviewer, 2)
+	reviewers[0] = Reviewer{Name: "Entry 0", Email: expected_reviewer_email, Githubusername: expected_from}
+	reviewers[1] = Reviewer{Name: "Entry 1", Email: expected_reviewer_email, Githubusername: expected_from}
 	return
 }

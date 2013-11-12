@@ -56,12 +56,13 @@ func SendReviewRequestEmail(request Review_request) {
 
 func parsePropertiesAndRandomGenReviewer(payload interface{}, reviewers []Reviewer) Review_request {
 	pusher := payload.(map[string]interface{})["pusher"]
+	push_user := pusher.(map[string]interface{})["name"].(string)
 	review_link := payload.(map[string]interface{})["compare"].(string)
-	rev := generateReviewer(reviewers)
-	return Review_request{From: pusher.(map[string]interface{})["name"].(string), To: rev, Message: "Please review", Review_link: review_link}
+	rev := generateReviewer(reviewers, push_user)
+	return Review_request{From: push_user, To: rev, Message: "Please review", Review_link: review_link}
 }
 
-func generateReviewer(reviewers []Reviewer) (rev Reviewer) {
+func generateReviewer(reviewers []Reviewer, push_user string) (rev Reviewer) {
 	count := len(reviewers)
 	if count == 0 {
 		log.Println("No reviewers provided. Exiting...")
@@ -70,6 +71,16 @@ func generateReviewer(reviewers []Reviewer) (rev Reviewer) {
 
 	rand.Seed(time.Now().UTC().UnixNano())
 	r := rand.Intn(count)
+	
+	if reviewers[r].Githubusername == push_user {
+		log.Println("Reviewer is same as pusher so sorting that little pickle out...")
+		if r == count-1 {
+			r--
+		} else {
+			r++
+		}
+	}
+	
 	log.Printf("%v index randomly selected. Reviewer is %v", r, reviewers[r].Name)
 
 	return reviewers[r]
