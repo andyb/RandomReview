@@ -44,7 +44,7 @@ func GenerateReviewRequest(payload interface{}, reviewers []Reviewer) (rr Review
 
 func SendReviewRequestEmail(request Review_request) {
 	log.Printf("Sending review request from %v to %v", request.From, request.To.Name)
-	toAddresses := []string{request.To.Email, "abritcliffe@sportingsolutions.com"}
+	toAddresses := []string{request.To.Email, "me@andy....com"}
 	var output bytes.Buffer
 	subject := "Connect: Code review request from " + request.From
 	output.WriteString(fmt.Sprintf("Hi %v: \n\n", request.To.Name))
@@ -91,7 +91,7 @@ func sendMail(output []byte, subject string, fromAddress string, toAddresses []s
 	from := mail.Address{"Code Review Request", "codereviewreq-noreply@andybritcliffe.com"}
 	auth := smtp.PlainAuth(
 		"",
-		"email@account.cim",
+		"email@account.com",
 		"password",
 		smtpServer,
 	)
