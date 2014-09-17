@@ -87,12 +87,12 @@ func generateReviewer(reviewers []Reviewer, push_user string) (rev Reviewer) {
 }
 
 func sendMail(output []byte, subject string, fromAddress string, toAddresses []string) {
-	smtpServer := "smtp.mailgun.org"
-	from := mail.Address{"Code Review Request", "codereviewreq-noreply@sportingsolutions.com"}
+	smtpServer := "smtp.blah.org"
+	from := mail.Address{"Code Review Request", "codereviewreq-noreply@andybritcliffe.com"}
 	auth := smtp.PlainAuth(
 		"",
-		"postmaster@sportingsolutions.com",
-		"2a312u3v1lq6",
+		"email@account.cim",
+		"password",
 		smtpServer,
 	)
 	header := make(map[string]string)
